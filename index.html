@@ -1,6 +1,8 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="css.css">
+		<script src="js.js"></script>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
 	</head>
 	<body>
 		<div id="container">
@@ -8,12 +10,30 @@
 			<!-- flexboxtest:
 			<div class="flexbox">im a flexbox</div>
 			-->
-			<div id="gameContainer">
-				
-				
-				</div>
+			<div id="gameContainer"></div>
 
+			<div id="testBox">
+				<div id="testBoxs"></div>
 			</div>
+
 		</div>
 	</body>
 </html>
+<script>	
+ function postionAnimation (num){
+
+	$("#testBoxs").addClass("position"+num);
+	alert("helloworld");
+}
+window.onload=function(){
+	//setTimeout("postionAnimation(1)",1000);
+	//setTimeout("postionAnimation(2)",3000);
+	
+}
+//简单用例：实现元素滑动，元素zooming的动画
+//目前的一个问题是，css是写好了的，是静态的东西，如何配合键位响应实现动态操作？是不是每修改一次class就会触发一次动画？
+//经测试证明确实如此，只需修改class。故确定实现动画的方式是：修改css
+
+
+
+</script>
