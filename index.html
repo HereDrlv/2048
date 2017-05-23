@@ -1,8 +1,9 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="css.css">
-		<script src="js.js"></script>
-		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.js"></script>
+		<!--
+		 -->
 	</head>
 	<body>
 		<div id="container">
@@ -10,21 +11,59 @@
 			<!-- flexboxtest:
 			<div class="flexbox">im a flexbox</div>
 			-->
-			<div id="gameContainer"></div>
+			<div id="gameContainer">
+					
 
-			<div id="testBox">
-				<div id="testBoxs"></div>
+		    	<div id="tile-container">
+
+		    	</div>
+
+		    	<div class="grid-container">
+			        <div class="grid-row">
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			        </div>
+			        <div class="grid-row">
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			        </div>
+			        <div class="grid-row">
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			        </div>
+			        <div class="grid-row">
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			          <div class="grid-cell"></div>
+			        </div>
+		        </div>
 			</div>
+
+    	</div>
+
+
+		<div id="testBox">
+			<div id="testBoxs"></div>
+		</div>
 
 		</div>
 	</body>
 </html>
 <script>	
+ /*
  function postionAnimation (num){
 
 	$("#testBoxs").addClass("position"+num);
 	alert("helloworld");
 }
+ */
 window.onload=function(){
 	//setTimeout("postionAnimation(1)",1000);
 	//setTimeout("postionAnimation(2)",3000);
@@ -37,3 +76,4 @@ window.onload=function(){
 
 
 </script>
+<script src="js.js"></script>

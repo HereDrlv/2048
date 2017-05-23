@@ -1,4 +1,7 @@
 
+function creatingGrid(x,y,num){
+	$("#tile-container").append("<div class='tile position"+x+"-"+y+"'>"+num+"</div>");	
+}
 
 //临时生成一个grids数组
 var testGrids=new Array(); //先声明一维 
@@ -6,9 +9,30 @@ var testGrids=new Array(); //先声明一维
 for(var i=0;i<4;i++){
 	testGrids[i]=new Array(); 
 	for(var j=0;j<4;j++){
-		testGrids[i][j]=i+j;  // 赋值，每个数组元素的值为1或0
+		testGrids[i][j]=(j+i)%4;  // 赋值，每个数组元素的值为1或0
 	}
 }
+//临时生成与上面对应的tile
+
+//creatingGrid(1,1,0);
+creatingGrid(1,2,1);
+creatingGrid(1,3,2);
+creatingGrid(1,4,3);
+
+creatingGrid(2,1,1);
+creatingGrid(2,2,2);
+creatingGrid(2,3,3);
+//creatingGrid(2,4,1);
+
+creatingGrid(3,1,2);
+creatingGrid(3,2,3);
+//creatingGrid(3,3,1);
+creatingGrid(3,4,1);
+
+creatingGrid(4,1,3);
+//creatingGrid(4,2,0);
+creatingGrid(4,3,1);
+creatingGrid(4,4,2);
 
 
 //输出数组各项
@@ -32,33 +56,30 @@ consoleGrids(testGrids);
   };
 
 
-
-
-
-
-
-
-
-
 var isGridsNew=1;
+
+
+
+
+
+
+
 
 
 //下面写键位响应操作
 
 document.addEventListener("keydown",function (event) {//这个连法也是挺奇妙的。。但是记住就行了
-	
+
+
+
 	if (isGridsNew) {
-	console.log("new");
 	gridsAfter = gridsCalculation(event,testGrids);
 	isGridsNew=0;
-	consoleGrids(gridsAfter);
 	}
 	else{
-	console.log("continue");
 	gridsAfter = gridsCalculation(event,gridsAfter);
 	
-	}//又出现爆出的bug
-
+	}
 	console.log("gridsAfter:");
 	consoleGrids(gridsAfter);
 })
@@ -69,7 +90,7 @@ function gridsCalculation(event,grids){
 
 	var direction =vector[event.which-37];//event.which。。连起来了
 
-//
+	//
 	
 	/*1.求对应位置对应方向上的格数*/
 
@@ -191,7 +212,6 @@ function gridsCalculation(event,grids){
 	
 	}
 
-	//这里需要为mergeType为1的后续格子加上一个位移
 
 	//consoleGrids(mergeTypes_transposition);//successful，不过要转置一下
 	var mergeTypes=new Array();
@@ -214,7 +234,6 @@ function gridsCalculation(event,grids){
 			displacement_2[i][j]=0;
 		}
 	}
-	//又要先初始化，否则爆
 	
 	
 
@@ -241,16 +260,11 @@ function gridsCalculation(event,grids){
 			
 		}
 	}
-//上面得到了粗糙的newGrids_2，displacement_1
+	//上面得到了粗糙的newGrids_2，displacement_1()挤合dis,displacement_2()融合
 
-//下面重复一次，输入newGrids_2得newGrids_3,displacement_2
+	//下面重复一次，输入newGrids_2得newGrids_3,displacement_3
 
-//repeat1
-
-
-//in：newGrids_2  out：newGrids_3,displacement_2
-//in：newGrids_2  out：newGrids_3,displacement_2
-
+	//repeat1
 	
 	/*1.求对应位置对应方向上的格数*/
 
@@ -271,86 +285,7 @@ function gridsCalculation(event,grids){
 
 			//求emptyNum
 			for (var i = 1; i <= distance; i++) {
-				//看下这个坐标的问题
-				//console.log('y,x,i',y,x,i);
-				//console.log('direction.y,direction.x',direction.y,direction.x);
-				//console.log('y+i*direction.y][x+i*direction.x',y+i*direction.y,x+i*direction.x)
-				//console.log('here?');
 				if (newGrids_2[x+i*direction.x][y+i*direction.y]==0) emptyNum++;
-			}
-			emptyNums[x][y]=emptyNum;
-		}
-	}
-	
-	//以上，便得到了每格沿direction方向上的empty格数，排布成了一个矩阵。
-
-	var displacement_2=emptyNums;
-	//console.log('emptyNums:');
-	//consoleGrids(emptyNums);
-
-	
-
-	/*2.移动对应格数，得到移动后的矩阵*/
-
-	
-
-	//direction 0,1 : newGrids_2[x][y]移动到[x+direction.x*displacement_2[x][y]][y+direction.y*displacement_2[x][y]]处
-	var newGrids_3 = new Array();
-	for (var i =0 ; i < 4; i++) {
-		newGrids_3[i] = new Array();
-		for (var j =0 ; j < 4; j++) {
-			newGrids_3[i][j]=0;
-		}
-	}
-	//newGrids_3的初始化。不先初始化的话，下面超前赋值，会出bug。
-
-	for (var i = 0; i < 4; i++) {
-		for (var j = 0; j < 4; j++) {
-			if (newGrids_2[i][j]) {	
-				//console.log(i+1,j+1,'to',i+direction.x*displacement_2[i][j]+1,j+direction.y*displacement_2[i][j]+1);
-				newGrids_3[i+direction.x*displacement_2[i][j]][j+direction.y*displacement_2[i][j]]=newGrids_2[i][j]+newGrids_3[i+direction.x*displacement_2[i][j]][j+direction.y*displacement_2[i][j]];			
-			}		
-		}	
-	}
-	//console.log('newGrids_3:');
-	//consoleGrids(newGrids_3);//successful
-
-	//这样便得到了新的矩阵newGrids_3
-
-
-//
-
-//repeat2
-	
-//in：newGrids_3  out：newGrids_4,displacement_3
-//in：newGrids_3  out：newGrids_4,displacement_3
-
-	
-	/*1.求对应位置对应方向上的格数*/
-
-
-	//以下两个for循环，得到了empty格数。
-	var emptyNums=new Array();
-	for (var x = 0; x <= 3; x++) {
-		emptyNums[x]=new Array();
-		for (var y = 0; y <= 3; y++) {
-				
-			var distance ;//就四句话呗。。暴力if	
-			if (direction==vector[2]) distance = 3-y ;//right
-			if (direction==vector[0]) distance = y ;//left
-			if (direction==vector[3]) distance = 3-x ;//down
-			if (direction==vector[1]) distance = x ;//up
-			//PS:我居然被两个等号困了半个小时。。f**k
-			var emptyNum=0;
-
-			//求emptyNum
-			for (var i = 1; i <= distance; i++) {
-				//看下这个坐标的问题
-				//console.log('y,x,i',y,x,i);
-				//console.log('direction.y,direction.x',direction.y,direction.x);
-				//console.log('y+i*direction.y][x+i*direction.x',y+i*direction.y,x+i*direction.x)
-				//console.log('here?');
-				if (newGrids_3[x+i*direction.x][y+i*direction.y]==0) emptyNum++;
 			}
 			emptyNums[x][y]=emptyNum;
 		}
@@ -368,47 +303,48 @@ function gridsCalculation(event,grids){
 
 	
 
-	//direction 0,1 : newGrids_3[x][y]移动到[x+direction.x*displacement_3[x][y]][y+direction.y*displacement_3[x][y]]处
-	var newGrids_4 = new Array();
+	//direction 0,1 : newGrids_2[x][y]移动到[x+direction.x*displacement_3[x][y]][y+direction.y*displacement_3[x][y]]处
+	var newGrids_3 = new Array();
 	for (var i =0 ; i < 4; i++) {
-		newGrids_4[i] = new Array();
+		newGrids_3[i] = new Array();
 		for (var j =0 ; j < 4; j++) {
-			newGrids_4[i][j]=0;
+			newGrids_3[i][j]=0;
 		}
 	}
-	//newGrids_4的初始化。不先初始化的话，下面超前赋值，会出bug。
+	//newGrids_3的初始化。不先初始化的话，下面超前赋值，会出bug。
 
 	for (var i = 0; i < 4; i++) {
 		for (var j = 0; j < 4; j++) {
-			if (newGrids_3[i][j]) {	
+			if (newGrids_2[i][j]) {	
 				//console.log(i+1,j+1,'to',i+direction.x*displacement_3[i][j]+1,j+direction.y*displacement_3[i][j]+1);
-				newGrids_4[i+direction.x*displacement_3[i][j]][j+direction.y*displacement_3[i][j]]=newGrids_3[i][j]+newGrids_4[i+direction.x*displacement_3[i][j]][j+direction.y*displacement_3[i][j]];			
+				newGrids_3[i+direction.x*displacement_3[i][j]][j+direction.y*displacement_3[i][j]]=newGrids_2[i][j]+newGrids_3[i+direction.x*displacement_3[i][j]][j+direction.y*displacement_3[i][j]];			
 			}		
 		}	
 	}
-	//console.log('newGrids_4:');
-	//consoleGrids(newGrids_4);//successful
+	//console.log('newGrids_3:');
+	//consoleGrids(newGrids_3);//successful
 
-	//这样便得到了新的矩阵newGrids_4
-
-
-//
-
-//repeat where
+	//这样便得到了新的矩阵newGrids_3
 
 
 
 
 
+//	console.log('displacement_1');
+//	consoleGrids(displacement_1);//一次挤合
 
+	console.log('displacement_2');//merge
+	consoleGrids(displacement_2);
 
-
-
+/*
+	console.log('displacement_3');//merge后合
+	consoleGrids(displacement_3);
+*/
 	//至此，已经将所有的位移全部做好
 
 
 
-	//下面追踪计算总位移量displacement矩阵
+//下面追踪计算总位移量displacement矩阵
 	var displacement=new Array();
 	for (var i = 0; i < 4; i++) {
 		displacement[i]=new Array();
@@ -416,13 +352,61 @@ function gridsCalculation(event,grids){
 			displacement[i][j]=0;
 		}
 	}//先初始化不用说。
-	//consoleGrids(displacement);//successful
 
-	//下面追踪计算位移量
+	for (var i = 0; i < 4; i++) {
+		for (var j = 0; j < 4; j++) {
+			var i_=displacement_1[i][j]*direction.x+i;
+			var j_=displacement_1[i][j]*direction.y+j;
+			
+			var i__=displacement_2[i_][j_]*direction.x+i_;
+			var j__=displacement_2[i_][j_]*direction.y+j_;
+			
+			var i___=displacement_3[i__][j__]*direction.x+i__;
+			var j___=displacement_3[i__][j__]*direction.y+j__;
+			
+
+			displacement[i][j]=direction.x ? (i___-i)/direction.x:(j___-j)/direction.y;
+			//console.log('displacement[i][j]', displacement[i][j]);
+		}	
+	}
+	console.log('displacement');
+	consoleGrids(displacement);
+
+
+	//下面moving tiles
+	$(".tile").addClass("unmoved");
+	for (var x = 1; x <= 4; x++) {
+		for (var y = 1; y <= 4; y++) {
+			if(!displacement[x-1][y-1]) continue;
+			var x_=direction.x*displacement[x-1][y-1]+x;
+			var y_=direction.y*displacement[x-1][y-1]+y;
+			console.log('x,y',x,y,'x_,y_',x_,y_);		
+			movingTile(x,y,x_,y_);
+		}	
+	}
+	$(".tile").removeClass("unmoved");
+	
+
+
+	//下面做merge生新
+	//有merge产生的位置就是displacement_2的对应位置
 
 
 
 
-	return newGrids_4
+
+	return newGrids_3
 }
 
+function movingTile(x,y,x_,y_) {
+	//yx为原坐标，y_ x_为目的坐标
+	var toMoveTile=$(".position"+y+"-"+x+".unmoved");
+	toMoveTile.addClass("position"+y_+"-"+x_);
+	toMoveTile.removeClass("position"+y+"-"+x);
+	toMoveTile.removeClass("unmoved");
+
+}
+
+function merge(){
+
+}

@@ -9,7 +9,6 @@ body{
 
 #container{
 	height: 200px;
-
 	display: -webkit-flex;
 	display: 		 flex;
 	-webkit-align-items: center;
@@ -19,6 +18,149 @@ body{
             /*flexbox的居中方式*/
 
 }
+.grid-container {
+  position: absolute;
+  top: 110px;
+  z-index: 1; }/*神奇分层*/
+
+
+
+.grid-cell {
+  width: 106.25px;
+  height: 106.25px;
+  margin-right: 15px;
+  float: left;
+  border-radius: 3px;
+  background: rgba(238, 228, 218, 0.35); }
+  .grid-cell:last-child {
+    margin-right: 0; }
+
+.grid-row {
+  margin: 0px 15px;
+   }
+
+.grid-cell {
+  width: 106.25px;
+  height: 106.25px;
+  margin: 5px;
+  border-radius: 3px;
+  background: rgba(238, 228, 218, 0.35); 
+}
+  
+
+
+#tile-container {
+  width: 500px;
+  height: 520px;
+  position: absolute;
+  z-index: 1; }
+
+
+.tile{
+  display: inline-block;
+  position: absolute;
+  top:15px;
+  left: 20px;
+  width: 106.25px;
+  height: 106.25px;
+  z-index: 2;
+  background-color: #fff;
+
+  /*这是实现流畅动画的设置*/  
+  -webkit-transition: 100ms ease-in-out;
+  -moz-transition: 100ms ease-in-out;
+  transition: 100ms ease-in-out;
+  /**/
+}
+
+  .position1-1 {
+    -webkit-transform: translate(0px, 0px);
+    -moz-transform: translate(0px, 0px);
+    -ms-transform: translate(0px, 0px);
+    transform: translate(0px, 0px); }
+  .position1-2 {
+    -webkit-transform: translate(0px, 116.25px);
+    -moz-transform: translate(0px, 116.25px);
+    -ms-transform: translate(0px, 116.25px);
+    transform: translate(0px, 116.25px); }
+
+  .position1-3 {
+    -webkit-transform: translate(0px, 232.5px);
+    -moz-transform: translate(0px, 232.5px);
+    -ms-transform: translate(0px, 232.5px);
+    transform: translate(0px, 232.5px); }
+  .position1-4 {
+    -webkit-transform: translate(0px, 348.75px);
+    -moz-transform: translate(0px, 348.75px);
+    -ms-transform: translate(0px, 348.75px);
+    transform: translate(0px, 348.75px); }
+  .position2-1 {
+    -webkit-transform: translate(116.25px, 0px);
+    -moz-transform: translate(116.25px, 0px);
+    -ms-transform: translate(116.25px, 0px);
+    transform: translate(116.25px, 0px); }
+  .position2-2 {
+    -webkit-transform: translate(116.25px, 116.25px);
+    -moz-transform: translate(116.25px, 116.25px);
+    -ms-transform: translate(116.25px, 116.25px);
+    transform: translate(116.25px, 116.25px); }
+  .position2-3 {
+    -webkit-transform: translate(116.25px, 232.5px);
+    -moz-transform: translate(116.25px, 232.5px);
+    -ms-transform: translate(116.25px, 232.5px);
+    transform: translate(116.25px, 232.5px); }
+  .position2-4 {
+    -webkit-transform: translate(116.25px, 348.75px);
+    -moz-transform: translate(116.25px, 348.75px);
+    -ms-transform: translate(116.25px, 348.75px);
+    transform: translate(116.25px, 348.75px); }
+  .position3-1 {
+    -webkit-transform: translate(232.5px, 0px);
+    -moz-transform: translate(232.5px, 0px);
+    -ms-transform: translate(232.5px, 0px);
+    transform: translate(232.5px, 0px); }
+  .position3-2 {
+    -webkit-transform: translate(232.5px, 116.25px);
+    -moz-transform: translate(232.5px, 116.25px);
+    -ms-transform: translate(232.5px, 116.25px);
+    transform: translate(232.5px, 116.25px); }
+  .position3-3 {
+    -webkit-transform: translate(232.5px, 232.5px);
+    -moz-transform: translate(232.5px, 232.5px);
+    -ms-transform: translate(232.5px, 232.5px);
+    transform: translate(232.5px, 232.5px); }
+  .position3-4 {
+    -webkit-transform: translate(232.5px, 348.75px);
+    -moz-transform: translate(232.5px, 348.75px);
+    -ms-transform: translate(232.5px, 348.75px);
+    transform: translate(232.5px, 348.75px); }
+  .position4-1 {
+    -webkit-transform: translate(348.75px, 0px);
+    -moz-transform: translate(348.75px, 0px);
+    -ms-transform: translate(348.75px, 0px);
+    transform: translate(348.75px, 0px); }
+  .position4-2 {
+    -webkit-transform: translate(348.75px, 116.25px);
+    -moz-transform: translate(348.75px, 116.25px);
+    -ms-transform: translate(348.75px, 116.25px);
+    transform: translate(348.75px, 116.25px); }
+  .position4-3 {
+    -webkit-transform: translate(348.75px, 232.5px);
+    -moz-transform: translate(348.75px, 232.5px);
+    -ms-transform: translate(348.75px, 232.5px);
+    transform: translate(348.75px, 232.5px); }
+  .position4-4 {
+    -webkit-transform: translate(348.75px, 348.75px);
+    -moz-transform: translate(348.75px, 348.75px);
+    -ms-transform: translate(348.75px, 348.75px);
+    transform: translate(348.75px, 348.75px); }
+
+
+
+
+
+
+
 #testBox {
 	position: relative;
 }
