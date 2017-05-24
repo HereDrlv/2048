@@ -66,12 +66,26 @@ body{
   z-index: 2;
   background-color: #fff;
 
+  font-size: 70px;
+  text-align: center;
+  vertical-align: center;
+
   /*这是实现流畅动画的设置*/  
   -webkit-transition: 100ms ease-in-out;
   -moz-transition: 100ms ease-in-out;
   transition: 100ms ease-in-out;
   /**/
+
+   -webkit-animation: appear 200ms ease 100ms;
+  -moz-animation: appear 200ms ease 100ms;
+  animation: appear 200ms ease 100ms;
+
+  -webkit-animation-fill-mode: backwards;
+  -moz-animation-fill-mode: backwards;
+  animation-fill-mode: backwards; 
+
 }
+
 
   .position1-1 {
     -webkit-transform: translate(0px, 0px);
@@ -160,40 +174,6 @@ body{
 
 
 
-
-#testBox {
-	position: relative;
-}
-
-#testBoxs {
-	position: absolute;
-	width: 100px;
-	height: 100px;
-	background-color: black;
-	opacity: 0;
-  
-  /*这是实现流畅动画的设置*/  
-  -webkit-transition: 100ms ease-in-out;
-  -moz-transition: 100ms ease-in-out;
-  transition: 100ms ease-in-out;
-  /**/
-    }
- /*话说格子的位置抄源码就行了*/   
-.position1{
-
-  -webkit-transform: translate(100px, 111px);
-  -moz-transform: translate(100px, 111px);
-  -ms-transform: translate(100px, 111px);
-  transform: translate(100px, 111px); 
-
-}
-.position2{
-	
-  -webkit-transform: translate(200px, 300px);
-  -moz-transform: translate(200px, 300px);
-  -ms-transform: translate(200px, 300px);
-  transform: translate(200px, 300px); 
-}
   -webkit-animation: appear 200ms ease 100ms;
   -moz-animation: appear 200ms ease 100ms;
   animation: appear 200ms ease 100ms;
@@ -211,7 +191,7 @@ body{
     transform: scale(0); }
 
   100% {
-    opacity: 1;
+    opacity: 0;
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);
@@ -225,7 +205,36 @@ body{
     transform: scale(0); }
 
   100% {
-    opacity: 1;
+    opacity: 0;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); } }
+
+@-webkit-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    transform: scale(1); } }
+@-moz-keyframes appear {
+  0% {
+    opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    transform: scale(0); }
+
+  100% {
+    opacity: 0;
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);
@@ -239,17 +248,12 @@ body{
     transform: scale(0); }
 
   100% {
-    opacity: 1;
+    opacity: 0;
     -webkit-transform: scale(1);
     -moz-transform: scale(1);
     -ms-transform: scale(1);
     transform: scale(1); } }
-/* flexboxtest:;
-.flexbox{
-	background-color: rgba(238, 228, 218, 0.35);
-	width: 200px; 
-}
-*/
+
 
 #gameContainer{
 	background-color: #bbada0;

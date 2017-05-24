@@ -2,37 +2,24 @@
 function creatingGrid(x,y,num){
 	$("#tile-container").append("<div class='tile position"+x+"-"+y+"'>"+num+"</div>");	
 }
+function removeGrid(x,y,num){
+	$(".tile.position"+x+"-"+y).remove();	
+}
 
-//临时生成一个grids数组
-var testGrids=new Array(); //先声明一维 
+
+//新游戏初始化
+var Grids=new Array();
 
 for(var i=0;i<4;i++){
-	testGrids[i]=new Array(); 
+	Grids[i]=new Array(); 
 	for(var j=0;j<4;j++){
-		testGrids[i][j]=(j+i)%4;  // 赋值，每个数组元素的值为1或0
+		Grids[i][j]=0;  
 	}
 }
-//临时生成与上面对应的tile
+Grids=randomCreating(Grids);
+Grids=randomCreating(Grids);
+//
 
-//creatingGrid(1,1,0);
-creatingGrid(1,2,1);
-creatingGrid(1,3,2);
-creatingGrid(1,4,3);
-
-creatingGrid(2,1,1);
-creatingGrid(2,2,2);
-creatingGrid(2,3,3);
-//creatingGrid(2,4,1);
-
-creatingGrid(3,1,2);
-creatingGrid(3,2,3);
-//creatingGrid(3,3,1);
-creatingGrid(3,4,1);
-
-creatingGrid(4,1,3);
-//creatingGrid(4,2,0);
-creatingGrid(4,3,1);
-creatingGrid(4,4,2);
 
 
 //输出数组各项
@@ -42,10 +29,9 @@ console.log(Grids[0][0],Grids[0][1],Grids[0][2],Grids[0][3]);
 console.log(Grids[1][0],Grids[1][1],Grids[1][2],Grids[1][3]);
 console.log(Grids[2][0],Grids[2][1],Grids[2][2],Grids[2][3]);
 console.log(Grids[3][0],Grids[3][1],Grids[3][2],Grids[3][3]);
-//[x][y]!!!!!!!!这里不规范好，下面一错万错
+//[x][y]!!!!
 }
-consoleGrids(testGrids);
-//alert(grids.length);
+consoleGrids(Grids);
 
 
 	var vector = {
@@ -73,7 +59,7 @@ document.addEventListener("keydown",function (event) {//这个连法也是挺奇
 
 
 	if (isGridsNew) {
-	gridsAfter = gridsCalculation(event,testGrids);
+	gridsAfter = gridsCalculation(event,Grids);
 	isGridsNew=0;
 	}
 	else{
@@ -111,11 +97,6 @@ function gridsCalculation(event,grids){
 
 			//求emptyNum
 			for (var i = 1; i <= distance; i++) {
-				//看下这个坐标的问题
-				//console.log('y,x,i',y,x,i);
-				//console.log('direction.y,direction.x',direction.y,direction.x);
-				//console.log('y+i*direction.y][x+i*direction.x',y+i*direction.y,x+i*direction.x)
-				//console.log('here?');
 				if (grids[x+i*direction.x][y+i*direction.y]==0) emptyNum++;
 			}
 			emptyNums[x][y]=emptyNum;
@@ -125,9 +106,7 @@ function gridsCalculation(event,grids){
 	//以上，便得到了每格沿direction方向上的empty格数，排布成了一个矩阵。
 
 	var displacement_1=emptyNums;
-	//console.log('emptyNums:');
-	//consoleGrids(emptyNums);
-
+	
 	
 
 	/*2.移动对应格数，得到移动后的矩阵*/
@@ -142,18 +121,14 @@ function gridsCalculation(event,grids){
 			newGrids_1[i][j]=0;
 		}
 	}
-	//newGrids_1的初始化。不先初始化的话，下面超前赋值，会出bug。
-
+	//newGrids_1的初始化。
 	for (var i = 0; i < 4; i++) {
 		for (var j = 0; j < 4; j++) {
 			if (grids[i][j]) {	
-				//console.log(i+1,j+1,'to',i+direction.x*displacement_1[i][j]+1,j+direction.y*displacement_1[i][j]+1);
 				newGrids_1[i+direction.x*displacement_1[i][j]][j+direction.y*displacement_1[i][j]]=grids[i][j]+newGrids_1[i+direction.x*displacement_1[i][j]][j+direction.y*displacement_1[i][j]];			
 			}		
 		}	
 	}
-	//console.log('newGrids_1:');
-	//consoleGrids(newGrids_1);//successful
 
 	//这样便得到了新的矩阵newgrids_1
 
@@ -191,21 +166,17 @@ function gridsCalculation(event,grids){
 				if (toMerge[1]&&toMerge[1]==newGrids_1[j][i]) {
 					if (toMerge[2]&&toMerge[2]==newGrids_1[j][i]) {
 						mergeTypes_transposition[i][j]=4;
-						//console.log(mergeTypes_transposition[i][j]);
 					}
 					else{
 						mergeTypes_transposition[i][j]=3;
-						//console.log(mergeTypes_transposition[i][j]);
 					}
 				}
 				else{
 					mergeTypes_transposition[i][j]=2;
-					//console.log(mergeTypes_transposition[i][j]);
 				}
 			}
 			else{
 				mergeTypes_transposition[i][j]=1;
-				//console.log(mergeTypes_transposition[i][j]);
 			}
 
 		}	
@@ -213,7 +184,6 @@ function gridsCalculation(event,grids){
 	}
 
 
-	//consoleGrids(mergeTypes_transposition);//successful，不过要转置一下
 	var mergeTypes=new Array();
 	for(var i=0;i<4;i++){
  		mergeTypes[i]=new Array();
@@ -294,9 +264,7 @@ function gridsCalculation(event,grids){
 	//以上，便得到了每格沿direction方向上的empty格数，排布成了一个矩阵。
 
 	var displacement_3=emptyNums;
-	//console.log('emptyNums:');
-	//consoleGrids(emptyNums);
-
+	
 	
 
 	/*2.移动对应格数，得到移动后的矩阵*/
@@ -316,13 +284,10 @@ function gridsCalculation(event,grids){
 	for (var i = 0; i < 4; i++) {
 		for (var j = 0; j < 4; j++) {
 			if (newGrids_2[i][j]) {	
-				//console.log(i+1,j+1,'to',i+direction.x*displacement_3[i][j]+1,j+direction.y*displacement_3[i][j]+1);
 				newGrids_3[i+direction.x*displacement_3[i][j]][j+direction.y*displacement_3[i][j]]=newGrids_2[i][j]+newGrids_3[i+direction.x*displacement_3[i][j]][j+direction.y*displacement_3[i][j]];			
 			}		
 		}	
 	}
-	//console.log('newGrids_3:');
-	//consoleGrids(newGrids_3);//successful
 
 	//这样便得到了新的矩阵newGrids_3
 
@@ -330,16 +295,7 @@ function gridsCalculation(event,grids){
 
 
 
-//	console.log('displacement_1');
-//	consoleGrids(displacement_1);//一次挤合
 
-	console.log('displacement_2');//merge
-	consoleGrids(displacement_2);
-
-/*
-	console.log('displacement_3');//merge后合
-	consoleGrids(displacement_3);
-*/
 	//至此，已经将所有的位移全部做好
 
 
@@ -353,6 +309,9 @@ function gridsCalculation(event,grids){
 		}
 	}//先初始化不用说。
 
+
+	//加了一个假移动判定
+	var isRealMove=0;
 	for (var i = 0; i < 4; i++) {
 		for (var j = 0; j < 4; j++) {
 			var i_=displacement_1[i][j]*direction.x+i;
@@ -366,14 +325,12 @@ function gridsCalculation(event,grids){
 			
 
 			displacement[i][j]=direction.x ? (i___-i)/direction.x:(j___-j)/direction.y;
-			//console.log('displacement[i][j]', displacement[i][j]);
+			if (!(i==i___&&j==j___)) isRealMove	
 		}	
 	}
-	console.log('displacement');
-	consoleGrids(displacement);
-
-
 	//下面moving tiles
+
+
 	$(".tile").addClass("unmoved");
 	for (var x = 1; x <= 4; x++) {
 		for (var y = 1; y <= 4; y++) {
@@ -387,15 +344,32 @@ function gridsCalculation(event,grids){
 	$(".tile").removeClass("unmoved");
 	
 
-
 	//下面做merge生新
+
+	//假移动是不生新的
+
 	//有merge产生的位置就是displacement_2的对应位置
+	for (var x = 1; x <= 4; x++) {
+		for (var y = 1; y <= 4; y++) {
+		if (!displacement_2[x-1][y-1]) continue;
+		//坐标xy：
+		var x_=displacement_2[x-1][y-1]*direction.x+x;
+		var y_=displacement_2[x-1][y-1]*direction.y+y;
+		//其数值大小在newGrids_1[i][j]处
+		//数值：
+		var num=2*newGrids_1[x-1][y-1];
+		
+		setTimeout("removeGrid(y_,x_)",101);
+		//这里删得太快了会导致动画出bug，最好在上面间隔100ms
+		creatingGrid(y_,x_,num);		
+		}	
+	}
 
+	//最后random生新：
+	var newGrids=randomCreating(newGrids_3);
+	
 
-
-
-
-	return newGrids_3
+	return newGrids
 }
 
 function movingTile(x,y,x_,y_) {
@@ -407,6 +381,29 @@ function movingTile(x,y,x_,y_) {
 
 }
 
-function merge(){
 
+function randomCreating(newGrids_3,){
+
+	var newGrids = new Array();
+	for (var i =0 ; i < 4; i++) {
+		newGrids[i] = new Array();
+		for (var j =0 ; j < 4; j++) {
+			newGrids[i][j]=newGrids_3[i][j];
+		}
+	}
+	
+	var value = Math.random() < 0.9 ? 2 : 4;
+
+	do{
+		var randomX=Math.floor(Math.random()*4);
+		var randomY=Math.floor(Math.random()*4);
+	}while(newGrids[randomX][randomY])
+
+	
+	//定点赋值
+	newGrids[randomX][randomY]=value;
+
+	//页面上生成新格
+	creatingGrid(randomY+1,randomX+1,value);
+	return newGrids
 }
